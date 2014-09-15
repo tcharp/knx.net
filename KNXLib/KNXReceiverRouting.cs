@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Diagnostics;
 
 namespace KNXLib
 {
@@ -79,7 +80,9 @@ namespace KNXLib
             IPEndPoint ep = null;
             var args = (object[])result.AsyncState;
             var session = (UdpClient)args[0];
-            var local = (IPEndPoint)args[1];
+			IPEndPoint local = args[1] as IPEndPoint;
+
+			Debug.WriteLine ("OnReceive() - received packet from: {0}", local);
 
             byte[] dgram = session.EndReceive(result, ref ep);
             ProcessDatagram(dgram);
