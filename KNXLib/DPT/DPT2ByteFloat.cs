@@ -5,9 +5,9 @@ using System.Text;
 
 namespace KNXLib.DPT
 {
-    public class DPTTemperature : DPT
+    public class DPTTemperature : IDpt
     {
-        public override string ID
+        public string ID
         {
             get
             {
@@ -15,7 +15,7 @@ namespace KNXLib.DPT
             }
         }
 
-        public override object fromDPT(String data)
+        public object fromDPT(String data)
         {
             byte[] dataConverted = new byte[data.Length];
             for (int i = 0; i < data.Length; i++)
@@ -25,7 +25,7 @@ namespace KNXLib.DPT
             return fromDPT(dataConverted);
         }
 
-        public override object fromDPT(byte[] data)
+        public object fromDPT(byte[] data)
         {
             // DPT bits high byte: MEEEEMMM, low byte: MMMMMMMM
             // left align all mantissa bits
@@ -36,7 +36,7 @@ namespace KNXLib.DPT
             return (float)((1 << exp) * v * 0.01);
         }
 
-        public override byte[] toDPT(object val)
+        public byte[] toDPT(object val)
         {
             float value = (float)val;
             byte[] dst = new byte[3];
@@ -61,7 +61,7 @@ namespace KNXLib.DPT
             return dst;
         }
 
-        public override byte[] toDPT(String value)
+        public byte[] toDPT(String value)
         {
             return toDPT(float.Parse(value, System.Globalization.CultureInfo.InvariantCulture));
         }

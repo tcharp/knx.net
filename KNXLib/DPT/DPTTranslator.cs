@@ -24,14 +24,22 @@ namespace KNXLib.DPT
         }
         #endregion
 
-        private IDictionary<string, DPT> dpts = new Dictionary<string, DPT>();
+        private IDictionary<string, IDpt> dpts = new Dictionary<string, IDpt>();
 
         private void Initialize()
         {
-            DPT dpt;
+            IDpt dpt;
 
             dpt = new DPTTemperature();
             dpts.Add(dpt.ID, dpt);
+
+            dpt = new DPT_TimeOfDay();
+            dpts.Add(dpt.ID, dpt);
+
+            dpt = new DPT_Date();
+            dpts.Add(dpt.ID, dpt);
+
+            dpts.Add("1.001", new DPT_Switch());
         }
 
         public object fromDPT(string type, byte[] data)
@@ -40,7 +48,7 @@ namespace KNXLib.DPT
             {
                 if (dpts.ContainsKey(type))
                 {
-                    DPT dpt = dpts[type];
+                    IDpt dpt = dpts[type];
                     return dpt.fromDPT(data);
                 }
             }
@@ -56,7 +64,7 @@ namespace KNXLib.DPT
             {
                 if (dpts.ContainsKey(type))
                 {
-                    DPT dpt = dpts[type];
+                    IDpt dpt = dpts[type];
                     return dpt.fromDPT(data);
                 }
             }
@@ -72,7 +80,7 @@ namespace KNXLib.DPT
             {
                 if (dpts.ContainsKey(type))
                 {
-                    DPT dpt = dpts[type];
+                    IDpt dpt = dpts[type];
                     return dpt.toDPT(value);
                 }
             }
@@ -88,7 +96,7 @@ namespace KNXLib.DPT
             {
                 if (dpts.ContainsKey(type))
                 {
-                    DPT dpt = dpts[type];
+                    IDpt dpt = dpts[type];
                     return dpt.toDPT(value);
                 }
             }
