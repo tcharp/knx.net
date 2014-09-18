@@ -60,6 +60,8 @@
     <Compile Include="DPT\DPT_Angle.cs" />
     <Compile Include="DPT\DPT_Value_2_Ucount.cs" />
     <Compile Include="DPT\DPT_Debug.cs" />
+    <Compile Include="DPT\DPT_Value_2_Count.cs" />
+    <Compile Include="DPT\DPT_Percent_V16.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -49,6 +49,12 @@ namespace KNXLib.DPT
 
 			dpt = new DPT_Debug ();
 			dpts.Add (dpt.ID, dpt);
+
+			dpt = new DPT_Value_2_Count ();
+			dpts.Add (dpt.ID, dpt);
+
+			dpt = new DPT_Percent_V16 ();
+			dpts.Add (dpt.ID, dpt);
         }
 
         public object fromDPT(string type, byte[] data)
