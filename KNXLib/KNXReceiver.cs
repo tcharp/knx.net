@@ -163,7 +163,7 @@ namespace KNXLib
                 {
                     datagram.apdu[i] = cemi[9 + i + datagram.aditional_info_length];
                 }
-                datagram.data = KNXHelper.GetData(datagram.data_length, datagram.apdu);
+                datagram.data = KNXHelper.GetRawData(datagram.data_length, datagram.apdu);
 
                 if (KNXConnection.Debug)
                 {
@@ -193,11 +193,16 @@ namespace KNXLib
                 if (datagram.message_code == 0x29)
                 {
                     int type = ((int)datagram.apdu[1]) >> 4;
+
                     if (type == 8)
-                        this.KNXConnection.Event(datagram.destination_address, datagram.data);
+					{
+						this.KNXConnection.Event(datagram.destination_address, datagram.data);
+					}
                     else if (type == 4 || type == 0)
+					{
                         this.KNXConnection.Status(datagram.destination_address, datagram.data);
-                }
+                	}
+				}
             }
             catch (Exception)
             {

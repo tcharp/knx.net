@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using System.Diagnostics;
 using KNXLib.Exceptions;
 
 namespace KNXLib
@@ -141,10 +142,11 @@ namespace KNXLib
                 this.UdpClient = new UdpClient(LocalEndpoint);
                 this.UdpClient.Client.DontFragment = true;
                 //this.UdpClient.Client.NoDelay = true;
-                this.UdpClient.Client.SendBufferSize = 0;
+                //this.UdpClient.Client.SendBufferSize = 0;
             }
-            catch (SocketException)
+            catch (SocketException sex)
             {
+				Console.WriteLine ("Connect() - failed with exception: {0}", sex.ToString ());
                 throw new ConnectionErrorException(this.Host, this.Port);
             }
 

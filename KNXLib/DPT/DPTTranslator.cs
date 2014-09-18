@@ -40,6 +40,15 @@ namespace KNXLib.DPT
             dpts.Add(dpt.ID, dpt);
 
             dpts.Add("1.001", new DPT_Switch());
+
+			dpt = new DPT_Scaling ();
+			dpts.Add (dpt.ID, dpt);
+
+			dpt = new DPT_Angle ();
+			dpts.Add (dpt.ID, dpt);
+
+			dpt = new DPT_Debug ();
+			dpts.Add (dpt.ID, dpt);
         }
 
         public object fromDPT(string type, byte[] data)
@@ -57,23 +66,7 @@ namespace KNXLib.DPT
             }
             return null;
         }
-
-        public object fromDPT(string type, String data)
-        {
-            try
-            {
-                if (dpts.ContainsKey(type))
-                {
-                    IDpt dpt = dpts[type];
-                    return dpt.fromDPT(data);
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return null;
-        }
-
+			
         public byte[] toDPT(string type, object value)
         {
             try
@@ -90,20 +83,5 @@ namespace KNXLib.DPT
             return null;
         }
 
-        public byte[] toDPT(string type, String value)
-        {
-            try
-            {
-                if (dpts.ContainsKey(type))
-                {
-                    IDpt dpt = dpts[type];
-                    return dpt.toDPT(value);
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return null;
-        }
     }
 }

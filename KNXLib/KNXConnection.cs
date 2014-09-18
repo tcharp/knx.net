@@ -169,17 +169,19 @@ namespace KNXLib
 
         #region events
         public delegate void KNXConnected();
+		public delegate void KNXDisconnected();
+		public delegate void KNXEvent(string address, byte[] state);
+		public delegate void KNXStatus(string address, byte[] state);
+
+		public KNXEvent KNXEventDelegate = null;
         public KNXConnected KNXConnectedDelegate = null;
-        public delegate void KNXDisconnected();
         public KNXDisconnected KNXDisconnectedDelegate = null;
-        public delegate void KNXEvent(string address, string state);
-        public KNXEvent KNXEventDelegate = null;
-        public delegate void KNXStatus(string address, string state);
         public KNXStatus KNXStatusDelegate = null;
 
         private object _connectedKey = new object();
         private bool _connected = false;
-        public virtual void Connected()
+        
+		public virtual void Connected()
         {
             try
             {
@@ -205,7 +207,8 @@ namespace KNXLib
                 }
             }
         }
-        public virtual void Disconnected()
+
+		public virtual void Disconnected()
         {
             lock (_connectedKey)
             {
@@ -232,24 +235,25 @@ namespace KNXLib
             }
         }
 
-        public void Event(string address, string state)
-        {
-            try
-            {
-                if (KNXEventDelegate != null)
-                    KNXEventDelegate(address, state);
-            }
-            catch (Exception)
-            {
-                //ignore
-            }
+		public void Event(string address, byte[] state)
+		{
+			try
+			{
+				if (KNXEventDelegate != null)
+					KNXEventDelegate(address, state);
+			}
+			catch (Exception)
+			{
+				//ignore
+			}
 
-            if (this.Debug)
-            {
-                Console.WriteLine("Device " + address + " has status " + state);
-            }
-        }
-        public void Status(string address, string state)
+			if (this.Debug)
+			{
+				Console.WriteLine("Device " + address + " has status " + state);
+			}
+		}
+
+		public void Status(string address, byte[] state)
         {
             try
             {
@@ -445,21 +449,12 @@ namespace KNXLib
         {
             return DPT.DPTTranslator.Instance.fromDPT(type, data);
         }
-
-        public object fromDPT(string type, String data)
-        {
-            return DPT.DPTTranslator.Instance.fromDPT(type, data);
-        }
-
+			
         public byte[] toDPT(string type, object value)
         {
             return DPT.DPTTranslator.Instance.toDPT(type, value);
         }
 
-        public byte[] toDPT(string type, String value)
-        {
-            return DPT.DPTTranslator.Instance.toDPT(type, value);
-        }
         #endregion
     }
 }

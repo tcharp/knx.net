@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 using KNXLib.Exceptions;
 
 namespace KNXLib
@@ -258,22 +259,51 @@ namespace KNXLib
             }
             if (data_length == 1)
             {
-                return System.Convert.ToChar(0x3F & apdu[1]).ToString();
+                return System.Convert.ToChar(0x3F & apdu[1]).ToString(CultureInfo.InvariantCulture);
             }
             else if (data_length == 2)
             {
-                return System.Convert.ToChar(apdu[2]).ToString();
+				return System.Convert.ToChar(apdu[2]).ToString(CultureInfo.InvariantCulture);
             }
             else
             {
                 string data = string.Empty;
                 for (int i = 2; i < apdu.Length; i++)
                 {
-                    data += System.Convert.ToChar(apdu[i]);
+					data += System.Convert.ToChar(apdu[i], CultureInfo.InvariantCulture);
                 }
                 return data;
             }
         }
+
+		internal static byte[] GetRawData(int data_length, byte[] apdu)
+		{
+			if (data_length == 0)
+			{
+				return new byte[0];
+			}
+
+			if (data_length == 1)
+			{
+				return new byte[]{(byte)(0x3F & apdu [1])};
+			}
+			else if (data_length == 2)
+			{
+				return new byte[1] {apdu[2]};
+			}
+			else
+			{
+				byte[] data = new byte[apdu.Length-2];
+
+				for (int i = 2; i < apdu.Length; i++)
+				{
+					data [i-2] = apdu[i];
+				}
+
+				return data;
+			}
+		}
+
         internal static int GetDataLength(byte[] data)
         {
             if (data.Length > 0)
@@ -293,6 +323,7 @@ namespace KNXLib
             }
             return 0;
         }
+
         internal static void WriteData(byte[] dgram, byte[] data, int data_start)
         {
             if (data.Length == 1)

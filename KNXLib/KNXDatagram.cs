@@ -27,6 +27,6 @@ namespace KNXLib
         internal string destination_address;
         internal int data_length;
         internal byte[] apdu;
-        internal string data;
+		internal byte[] data;
     }
 }

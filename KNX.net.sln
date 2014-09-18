@@ -27,7 +27,7 @@ Global
 		{CD1911AD-1967-40CB-A1C3-EC2FA562872B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = KNXTest\KNXTestRouting.csproj
+		StartupItem = KNXTestTunneling\KNXTestTunneling.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None

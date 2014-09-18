@@ -27,7 +27,7 @@ namespace KNXLib.DPT
 
         public object fromDPT(byte[] data)
         {
-            int b = data[0] & Convert.ToInt32("00000001", 2);
+            int b = data[0] & 1;
 
             return (b == 1);
         }

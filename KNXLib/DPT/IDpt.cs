@@ -11,9 +11,8 @@ namespace KNXLib.DPT
         {
             get;
         }
+
         object fromDPT(byte[] data);
-        object fromDPT(String data);
         byte[] toDPT(object val);
-        byte[] toDPT(String value);
     }
 }
