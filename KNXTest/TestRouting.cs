@@ -94,7 +94,7 @@ namespace KNXTest
             System.Environment.Exit(0);
         }
 
-		static void Event(string address, byte[] state)
+		static void Event(string source, string address, byte[] state)
         {
             if (address.Equals("1/1/18") || address.Equals("1/1/17"))
             {
@@ -111,9 +111,9 @@ namespace KNXTest
             }
         }
 
-		static void Status(string address, byte[] state)
+		static void Status(string source, string address, byte[] state)
         {
-            Console.WriteLine("New Status: device " + address + " has status " + state);
+			Console.WriteLine("New Status: device: " + source + " address: " + address + " has status: " + state);
         }
 
         static void Connected()

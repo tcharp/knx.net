@@ -170,8 +170,8 @@ namespace KNXLib
         #region events
         public delegate void KNXConnected();
 		public delegate void KNXDisconnected();
-		public delegate void KNXEvent(string address, byte[] state);
-		public delegate void KNXStatus(string address, byte[] state);
+		public delegate void KNXEvent(string source, string address, byte[] state);
+		public delegate void KNXStatus(string source, string address, byte[] state);
 
 		public KNXEvent KNXEventDelegate = null;
         public KNXConnected KNXConnectedDelegate = null;
@@ -235,12 +235,12 @@ namespace KNXLib
             }
         }
 
-		public void Event(string address, byte[] state)
+		public void Event(string source, string address, byte[] state)
 		{
 			try
 			{
 				if (KNXEventDelegate != null)
-					KNXEventDelegate(address, state);
+					KNXEventDelegate(source, address, state);
 			}
 			catch (Exception)
 			{
@@ -253,12 +253,12 @@ namespace KNXLib
 			}
 		}
 
-		public void Status(string address, byte[] state)
+		public void Status(string source, string address, byte[] state)
         {
             try
             {
                 if (KNXStatusDelegate != null)
-                    KNXStatusDelegate(address, state);
+                    KNXStatusDelegate(source, address, state);
             }
             catch (Exception)
             {
